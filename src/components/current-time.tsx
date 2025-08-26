@@ -1,12 +1,14 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useRef } from 'react';
 
 interface CurrentTimeProps {
   selectedTimezone: string
   timezones: Array<{ timezone: string; country?: string; countrie?: string; offset: number }>
   className?: string
 }
+let time = 0; 
 
 export function CurrentTime({ selectedTimezone, timezones, className }: CurrentTimeProps) {
   const [currentTime, setCurrentTime] = useState<Date>(new Date())
@@ -29,7 +31,10 @@ export function CurrentTime({ selectedTimezone, timezones, className }: CurrentT
     const hours = targetTime.getHours().toString().padStart(2, '0')
     const minutes = targetTime.getMinutes().toString().padStart(2, '0')
     const seconds = targetTime.getSeconds().toString().padStart(2, '0')
-    
+
+    let timeChange = targetTime.getMinutes() / 60;
+    time = targetTime.getHours() + timeChange;
+    console.log(time)
     return `${hours}:${minutes}:${seconds}`
   }
 
@@ -43,3 +48,7 @@ export function CurrentTime({ selectedTimezone, timezones, className }: CurrentT
   )
 } 
 
+
+export function getTime(): number {
+  return time
+  } 

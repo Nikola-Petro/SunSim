@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { IoSunnyOutline } from "react-icons/io5";
-import { CurrentTime } from "@/components/current-time"
+import { CurrentTime, getTime } from "@/components/current-time"
 
 import * as React from "react"
 import {
@@ -29,7 +29,6 @@ import { useState, useEffect } from 'react'
 export default function Home() {
   const [selectedTimezone, setSelectedTimezone] = React.useState('UTC')
 
-  const [bgColor, setbgColor] = useState("bg-amber-400")
 
 
   const tzs = [
@@ -43,19 +42,40 @@ export default function Home() {
     { timezone: 'PT', country: 'Pacific', offset: -8 },
     { timezone: 'CET', country: 'Central European', offset: 2 }
   ]
+
+  const getInitialBgColor = () => {
+    const currentTime = getTime()
+    
+    if (currentTime >= 19.2 && currentTime <= 22.2) {
+      return "bg-blue-950"
+    } else if (currentTime >= 22.2 || currentTime < 6) {
+      return "bg-stone-900"
+    } else {
+      return "bg-amber-400"
+    }
+  }
+  const [bgColor, setbgColor] = useState(getInitialBgColor )
+
   useEffect(() => {
-    if (selectedTimezone == 'JST')
+    if (getTime() >= 19.2 && getTime() <= 22.2 )
     {
       setbgColor("bg-blue-950")
     }
-    else
+    else if (getTime() >= 22.2 && getTime() <= 6.2)
     {
+      setbgColor("bg-stone-900")
+    }
+       else if (getTime() >= 6.2 && getTime() <= 7.2  )
+    {
+      setbgColor("bg-fuchsia-300")
+    }
+    else {
       setbgColor("bg-amber-400")
     }
   }, [selectedTimezone])
 
   return (
-    <div className={`${bgColor} grid items-center justify-items-center min-h-screen bg-amber-400`}>
+    <div className={`${bgColor} grid items-center justify-items-center min-h-screen transition delay-150 duration-300 ease-in-out `}>
 
       <Card className="w-full max-w-sm rounded-full bg-transparent justify-items-center">
         <CardHeader>
