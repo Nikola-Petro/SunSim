@@ -61,11 +61,11 @@ export default function Home() {
     {
       setbgColor("bg-blue-950")
     }
-    else if (getTime() >= 22.2 && getTime() <= 6.2)
+    else if (getTime() <= 5.2 || getTime() >= 22.2)
     {
       setbgColor("bg-stone-900")
     }
-       else if (getTime() >= 6.2 && getTime() <= 7.2  )
+       else if (getTime() >= 5.2 || getTime() <= 7.2  )
     {
       setbgColor("bg-fuchsia-300")
     }
